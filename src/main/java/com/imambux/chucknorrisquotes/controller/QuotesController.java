@@ -1,25 +1,23 @@
 package com.imambux.chucknorrisquotes.controller;
 
-import com.imambux.chucknorrisquotes.model.Quote;
-import com.imambux.chucknorrisquotes.service.ChuckNorrisQuotesService;
+import com.imambux.chucknorrisquotes.service.QuoteService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class QuotesController {
 
-    public final ChuckNorrisQuotesService chuckNorrisQuotesService;
+    private final QuoteService quoteService;
 
-    public QuotesController(ChuckNorrisQuotesService chuckNorrisQuotesService) {
-        this.chuckNorrisQuotesService = chuckNorrisQuotesService;
+    public QuotesController(QuoteService quoteService) {
+        this.quoteService = quoteService;
     }
 
     @RequestMapping
-    public ModelAndView getQuote() {
-        ModelAndView modelAndView = new ModelAndView("index");
-        modelAndView.addObject("quote", chuckNorrisQuotesService.getRandomQuote());
-        return modelAndView;
+    public String getQuote(Model model) {
+        model.addAttribute("joke", quoteService.getRandomQuote());
+        return "index";
     }
 
 }
